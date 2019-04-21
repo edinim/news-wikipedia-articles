@@ -1,0 +1,27 @@
+{
+    "name": "Lexo me Wikipedia",
+    "version": "1.0",
+    "description": "Zevendeso shkrimet e panevojshme te portaleve tona me artikujt e Wikipedia-se",
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": false
+    },
+    "permissions": [
+        "storage",
+        "tabs"
+    ],
+    "content_scripts": [
+        {
+            "css": [
+                "content-scripts/styles.css"
+            ],
+            "js": [
+                "js/jquery-3.4.0.min.js",
+                "content-scripts/script.js"
+            ]
+        }
+    ],
+    "manifest_version": 2
+}
