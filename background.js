@@ -17,3 +17,9 @@ chrome.runtime.onInstalled.addListener(function (details) {
         });
     }
 });
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if (message.title == "getWikipediaArticle") {
+        getWikipediaArticleByPageId(78897);
+    }
+});

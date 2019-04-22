@@ -6,7 +6,16 @@ $(site.changeArticleDiv)
         <p>
             Nuk te pelqen artikulli? 
             Ndrysho ate me nje artikull te <b>Wikipedia</b>  
-            <a id='changeArticleWikipedia'>Kliko ketu</a>
+            <a id='${site.name}changeArticle'>Kliko ketu</a>
         </p>
     </div>
     `)
+
+$(`#${site.name}changeArticle`)
+    .click(function () {
+        chrome.runtime.sendMessage({
+            title: 'getWikipediaArticle'
+        }, function () {
+
+        });
+    });
