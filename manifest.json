@@ -4,6 +4,7 @@
     "description": "Zevendeso shkrimet e panevojshme te portaleve tona me artikujt e Wikipedia-se",
     "background": {
         "scripts": [
+            "sites.js",
             "background.js"
         ],
         "persistent": false
@@ -23,6 +24,7 @@
             ],
             "js": [
                 "js/jquery-3.4.0.min.js",
+                "sites.js",
                 "content-scripts/script.js"
             ],
             "matches": [
