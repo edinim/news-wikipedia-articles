@@ -3,6 +3,7 @@ let newsSites = {
         name: 'IndeksOnline',
         changeArticleDiv: '.article-content',
         articleTitle: '.title',
-        articleContent: '.full-text'
+        articleContent: '.full-text',
+        articleImage: '.full-img'
     }
 }

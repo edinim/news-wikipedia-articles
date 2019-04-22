@@ -8,6 +8,7 @@
             "js/jquery-3.4.0.min.js",
             "js/response-handlers.js",
             "js/api.js",
+            "js/messenger.js",
             "background.js"
         ],
         "persistent": false

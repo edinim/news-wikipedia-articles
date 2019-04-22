@@ -6,7 +6,7 @@ $(site.changeArticleDiv)
         <p>
             Nuk te pelqen artikulli? 
             Ndrysho ate me nje artikull te <b>Wikipedia</b>  
-            <a id='${site.name}changeArticle'>Kliko ketu</a>
+            <a id='${site.name}changeArticle' class="changeArticleLink">Kliko ketu</a>
         </p>
     </div>
     `)
@@ -19,3 +19,11 @@ $(`#${site.name}changeArticle`)
 
         });
     });
+
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    if (message.title == 'WikipediaArticle') {
+        $(site.articleTitle).text(message.article.title);
+        $(site.articleContent).html(message.article.content);
+        $(site.articleImage).hide();
+    }
+});

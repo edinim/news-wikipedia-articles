@@ -4,5 +4,5 @@ function getWikiArticleResponseHandler(resp) {
         console.log(resp.error.info);
         return;
     }
-    console.log(article);
+    sendArticleAsMessage(article.displaytitle, article.text['*']);
 }
