@@ -1,3 +1,21 @@
 .changeArticleLink {
     cursor: pointer;
+    color: black;
+    font-weight: bold;
+}
+
+.changeArticleDiv {
+    padding: 20px;
+    background-color: #2196F3;
+    color: white;
+    margin-bottom: 15px;
+    font-family: monospace;
+}
+
+.error {
+    background-color: #f44336 !important;
+}
+
+.success {
+    background-color: #4CAF50 !important;
 }

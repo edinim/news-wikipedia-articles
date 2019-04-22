@@ -2,7 +2,8 @@ function getWikiArticleResponseHandler(resp) {
     const article = resp.parse;
     if (resp.error) {
         console.log(resp.error.info);
+        sendErrorToNewsSite();
         return;
     }
-    sendArticleAsMessage(article.displaytitle, article.text['*']);
+    sendArticleToNewsSite(article.displaytitle, article.text['*']);
 }

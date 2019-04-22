@@ -2,21 +2,23 @@ const site = newsSites[window.location.host];
 
 $(site.changeArticleDiv)
     .prepend(`
-    <div>
-        <p>
+    <div class="changeArticleDiv">
+            <span>
             Nuk te pelqen artikulli? 
-            Ndrysho ate me nje artikull te <b>Wikipedia</b>  
-            <a id='${site.name}changeArticle' class="changeArticleLink">Kliko ketu</a>
-        </p>
+            Ndrysho ate me nje artikull te <b>Wikipedia</b>
+            </span>
+            <a class="changeArticleLink">&#187; Kliko ketu</a>
     </div>
     `)
 
-$(`#${site.name}changeArticle`)
-    .click(function () {
-        chrome.runtime.sendMessage({
-            title: 'getWikipediaArticle'
-        }, function () {
-
+$(`.changeArticleLink`)
+    .on('click', function () {
+        $('.changeArticleDiv').fadeTo("slow", 0, function () {
+            $('.changeArticleDiv').hide();
+            chrome.runtime.sendMessage({
+                title: 'getWikipediaArticle'
+            }, function () {
+            });
         });
     });
 
@@ -25,5 +27,15 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         $(site.articleTitle).text(message.article.title);
         $(site.articleContent).html(message.article.content);
         $(site.articleImage).hide();
+        fadeInChangeArticleDiv('success', 'Lexim te kendshem!');
+    } else if (message.title == 'Error') {
+        fadeInChangeArticleDiv('error', message.error);
     }
 });
+
+function fadeInChangeArticleDiv(responseClass, message) {
+    $('.changeArticleDiv').css('opacity', '').addClass(responseClass).fadeIn("slow");;
+    $('.changeArticleDiv > span')
+        .text(`${message}`);
+    $('.changeArticleLink').text('Provo perseri');
+}
