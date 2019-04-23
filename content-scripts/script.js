@@ -1,7 +1,22 @@
 const site = newsSites[window.location.host];
 
-$(site.changeArticleDiv)
-    .prepend(`
+chrome.storage.sync.get('categories', function (data) {
+    const category = randomCheckedCategory(data.categories);
+    if (category.articles.length <= 1) {
+        chrome.runtime.sendMessage({
+            title: 'getWikipediaArticleByCategory',
+            category: category.name,
+            cmcontinue: category.cmcontinue
+        }, function () {
+        });
+    } else {
+        init(category);
+    }
+});
+
+function init(category) {
+    $(site.changeArticleDiv)
+        .prepend(`
     <div class="changeArticleDiv">
             <span>
             Nuk te pelqen artikulli? 
@@ -11,16 +26,20 @@ $(site.changeArticleDiv)
     </div>
     `)
 
-$(`.changeArticleLink`)
-    .on('click', function () {
-        $('.changeArticleDiv').fadeTo("slow", 0, function () {
-            $('.changeArticleDiv').hide();
-            chrome.runtime.sendMessage({
-                title: 'getWikipediaArticle'
-            }, function () {
+    $(`.changeArticleLink`)
+        .on('click', function () {
+            $('.changeArticleDiv').fadeTo("slow", 0, function () {
+                $('.changeArticleDiv').hide();
+                chrome.runtime.sendMessage({
+                    title: 'getWikipediaArticle',
+                    pageId: category.articles[0]
+                }, function () {
+                    removeFirstArticleFromCategoryArticles(category.name);
+                });
             });
         });
-    });
+}
+
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if (message.title == 'WikipediaArticle') {
@@ -38,4 +57,27 @@ function fadeInChangeArticleDiv(responseClass, message) {
     $('.changeArticleDiv > span')
         .text(`${message}`);
     $('.changeArticleLink').text('Provo perseri');
+}
+
+function randomCheckedCategory(categories) {
+    const checkedCategories = categories.filter(category => category.checked);
+
+    return checkedCategories[Math.floor(Math.random() * checkedCategories.length)];
+}
+
+function removeFirstArticleFromCategoryArticles(category) {
+    chrome.storage.sync.get('categories', function (data) {
+        let categories = data.categories;
+        for (let i = 0; i < categories.length; i++) {
+            if (categories[i].name == category) {
+                categories[i].articles.shift();
+                chrome.storage.sync.set({
+                    categories: categories
+                }, function () {
+                });
+
+                return;
+            }
+        }
+    });
 }
