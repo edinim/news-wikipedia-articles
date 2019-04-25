@@ -32,7 +32,8 @@
                 "content-scripts/script.js"
             ],
             "matches": [
-                "https://indeksonline.net/*"
+                "https://indeksonline.net/*",
+                "http://indeksonline.net/*"
             ]
         }
     ],

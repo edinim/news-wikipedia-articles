@@ -1,20 +1,22 @@
 const site = newsSites[window.location.host];
 
-chrome.storage.sync.get('categories', function (data) {
-    const category = randomCheckedCategory(data.categories);
-    if (category.articles.length <= 1) {
-        chrome.runtime.sendMessage({
-            title: 'getWikipediaArticleByCategory',
-            category: category.name,
-            cmcontinue: category.cmcontinue
-        }, function () {
-        });
-    } else {
-        init(category);
-    }
-});
+init();
 
-function init(category) {
+function init() {
+    chrome.storage.sync.get('categories', function (data) {
+        const category = randomCheckedCategory(data.categories);
+        if (category.articles.length <= 1) {
+            chrome.runtime.sendMessage({
+                title: 'getWikipediaArticleByCategory',
+                category: category.name,
+                cmcontinue: category.cmcontinue
+            });
+        }
+        addChangeArticleDiv(category);
+    });
+}
+
+function addChangeArticleDiv(category) {
     $(site.changeArticleDiv)
         .prepend(`
     <div class="changeArticleDiv">
@@ -42,7 +44,9 @@ function init(category) {
 
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (message.title == 'WikipediaArticle') {
+    if (message.title == "Init") {
+        getRandomCategory();
+    } else if (message.title == 'WikipediaArticle') {
         $(site.articleTitle).text(message.article.title);
         $(site.articleContent).html(message.article.content);
         $(site.articleImage).hide();
@@ -51,6 +55,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         fadeInChangeArticleDiv('error', message.error);
     }
 });
+
+console.log(chrome.runtime);
+
 
 function fadeInChangeArticleDiv(responseClass, message) {
     $('.changeArticleDiv').css('opacity', '').addClass(responseClass).fadeIn("slow");;

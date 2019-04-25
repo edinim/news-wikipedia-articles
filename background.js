@@ -19,7 +19,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if (message.title == "getWikipediaArticle") {
-        console.log(message.pageId);
         getWikipediaArticleByPageId(message.pageId);
     } else if (message.title == "getWikipediaArticleByCategory") {
         getWikipediaArticlesByCategory(message.category, message.cmcontinue);
