@@ -60,7 +60,7 @@ function fadeInChangeArticleDiv(responseClass, message) {
     $('.changeArticleDiv').css('opacity', '').addClass(responseClass).fadeIn("slow");;
     $('.changeArticleDiv > span')
         .text(`${message}`);
-    $('.changeArticleLink').text('Provo perseri');
+    $('.changeArticleLink').remove();
 }
 
 function randomCheckedCategory(categories) {
