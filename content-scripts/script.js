@@ -44,19 +44,16 @@ function addChangeArticleDiv(category) {
 
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (message.title == "Init") {
-        getRandomCategory();
-    } else if (message.title == 'WikipediaArticle') {
+    if (message.title == 'WikipediaArticle') {
         $(site.articleTitle).text(message.article.title);
         $(site.articleContent).html(message.article.content);
         $(site.articleImage).hide();
+        parseArticle(site);
         fadeInChangeArticleDiv('success', 'Lexim te kendshem!');
     } else if (message.title == 'Error') {
         fadeInChangeArticleDiv('error', message.error);
     }
 });
-
-console.log(chrome.runtime);
 
 
 function fadeInChangeArticleDiv(responseClass, message) {

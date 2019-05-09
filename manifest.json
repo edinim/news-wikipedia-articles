@@ -29,6 +29,7 @@
             "js": [
                 "js/jquery-3.4.0.min.js",
                 "sites.js",
+                "js/parser.js",
                 "content-scripts/script.js"
             ],
             "matches": [
