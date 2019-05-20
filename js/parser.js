@@ -4,4 +4,6 @@ function parseArticle(site) {
     $(site.articleContent + ' .reference').remove();
     $(site.articleContent + ' .metadata .plainlinks').remove();
     $(site.articleContent + ' .toc').remove();
+    $(site.articleContent + ' .messagebox').remove();
+
 }

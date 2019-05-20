@@ -34,7 +34,9 @@
             ],
             "matches": [
                 "https://indeksonline.net/*",
-                "http://indeksonline.net/*"
+                "http://indeksonline.net/*",
+                "https://telegrafi.com/*",
+                "http://telegrafi.com/*"
             ]
         }
     ],
